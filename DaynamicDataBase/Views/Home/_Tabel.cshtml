@@ -1,0 +1,51 @@
+﻿@model TabelViewModel
+
+
+<table class="table table-striped table-dark">
+    <thead>
+
+        <!-- Make Columns-->
+        <tr>
+            <th scope="col">#</th>
+            @foreach (var column in Model.Columns)
+            {
+                <th scope="col">@column</th>
+
+            }
+
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var rowCount = 1;
+        }
+
+
+        @if (Model.Rows != null && Model.Rows.Any())
+        {
+            @foreach (var row in Model.Rows)
+            {
+                <tr>
+                    <th scope="row">@rowCount</th>
+                    @foreach (var rowItem in Model.RowItems.Where(c => c.RowId == row))
+                    {
+                        <td>@rowItem.Value</td>
+
+                    }
+
+                </tr>
+
+                rowCount++;
+            }
+        }
+        else
+        {
+            <tr>
+                <th scope="row" colspan="100">رکوردی یافت نشد.</th>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+

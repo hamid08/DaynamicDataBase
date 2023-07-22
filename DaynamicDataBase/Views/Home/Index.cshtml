@@ -1,0 +1,41 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+
+}
+
+<select asp-for="TabelName" class="form-select" onchange="tabelChange()" aria-label="Default select example" 
+asp-items="@(new SelectList(Model.Tabels, nameof(AutoComplateViewModel.Value), nameof(AutoComplateViewModel.Text)))">
+    <option selected value="">نام جدول را انتخاب نمایید</option>
+</select>
+
+
+<div class="mt-5" id="DataGrid">
+
+
+
+</div>
+
+  <script>
+      function tabelChange(){
+        console.log("tabelName Changed");
+
+        var tabelName = $("#TabelName").val();
+        console.log($("#TabelName").val());
+
+        if (tabelName != '') {
+            $.get("@Url.Action("GetColumnsByTabelName")", {
+                tabelName: tabelName}, function(res) {
+
+                    $("#DataGrid").html('');
+                    $("#DataGrid").html(res);
+
+             });
+        }
+        else{
+            $("#DataGrid").html('');
+
+        }
+      }
+
+  </script>
